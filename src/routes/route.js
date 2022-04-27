@@ -1,15 +1,14 @@
 const express = require('express');
+const Author = require('../controllers/authorController');
+const Blog = require('../controllers/blogController');
+
 const router = express.Router();
 
-const autherController = require("../controllers/authorController")
-const blogController = require("../controllers/blogController")
-const deleteControllerId = require("../controllers/deleteController")
-const deleteControllerParams = require("../controllers/deleteBlogParamsController")
+router.post('/authors', Author.addAuthor);
+router.post('/blog', Blog.createBlog);
+router.get('/blogs', Blog.getBlogs);
+router.put('/blog/:blogId', Blog.updateBlog);
+router.delete('/blog/:blogId', Blog.deleteBlogById);
+router.delete('/blogs', Blog.deleteBlogs);
 
-router.post("/createauthor", autherController.createAuther)
-router.post("/createblogs", blogController.createblog)
-router.put("/blogs/:blogId", deleteControllerId.deleteBlogId)
-router.put("/blogs", deleteControllerParams.deleteBlogparams)
-
-
-module.exports =  router;
+module.exports = router;
