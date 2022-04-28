@@ -1,4 +1,4 @@
-const Author = require('../model/authorModel');
+const Author = require('../models/authorModel');
 const validateEmail = require('email-validator');
 
 const addAuthor = async (req, res) => {
