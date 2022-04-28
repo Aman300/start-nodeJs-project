@@ -1,22 +1,18 @@
+const student = require('../models/studentModule');
 
-const deleteModel = require('../models/blogModel')
+const deletePost = async (req, res) => {
 
-const deleteBlogById = async (req, res)=> {
-  try {
-   let blogId = req.params.blogId;
-    if(!blogId) return res.status(400).send({status:false,msg:"BlogId is required"})
-  
-    let data = await deleteModel.findById(blogId);
-    if (!data)  return res.status(404).send({ status: false, msg: "No such blog found" });
+    try {
+        
+        let deletePost = req.body.first_Name
 
-    if (data.isDeleted)  return res.status(404).send({ status: false, msg: " Already deleted blog Or Blog not exists" });
+        let deleteData = await student.findOneAndUpdate({first_Name: deletePost},{isdeleted: true},{new: true});
 
-    let timeStamps = new Date();
-    await deleteModel.findOneAndUpdate({_id:blogId},{$set: {isDeleted:true, deletedAt: timeStamps}},{new:true})
-    res.status(200).send({status:true,msg:"Blog is deleted successfully"})
-  } catch (err) {
-    res.status(500).send({ status: false, error: err.message });
-  }
-};
+        res.status(201).send({ status: true, data: deleteData});
 
-module.exports.deleteBlogById = deleteBlogById
+      } catch(error) {
+        res.status(500).send({ status: false, msg: error.message });
+      }
+    }
+
+module.exports.deletePost = deletePost;
