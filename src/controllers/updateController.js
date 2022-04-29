@@ -4,9 +4,11 @@ const updatePost = async (req, res) => {
 
     try {
         
+        let id = req.params.id
         let updateData = req.body
+        let del = false;
 
-        let upData = await student.findOneAndUpdate({$set: updateData},{new: true});
+        let upData = await student.findOneAndUpdate({_id: id},{$set: updateData, isDeleted: del},{new: true});
 
         res.status(201).send({ status: true, data: upData});
 

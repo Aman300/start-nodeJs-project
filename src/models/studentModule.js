@@ -27,7 +27,8 @@ const authorSchema = new mongoose.Schema({
         unique:true
     },
     isDeleted:{
-        default: false,
+        type:Boolean, 
+        default: false
     }
 
 },{timestamps:true})

@@ -4,9 +4,9 @@ const deletePost = async (req, res) => {
 
     try {
         
-        let deletePost = req.body.first_Name
+        let deletePost = req.params.id
 
-        let deleteData = await student.findOneAndUpdate({first_Name: deletePost},{isdeleted: true},{new: true});
+        let deleteData = await student.findOneAndUpdate({_id: deletePost},{isDeleted: true},{new: true});
 
         res.status(201).send({ status: true, data: deleteData});
 

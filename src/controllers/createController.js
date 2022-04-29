@@ -10,7 +10,7 @@ const createPost = async (req, res) => {
         res.status(201).send({ status: true, data: postData });
 
       } catch(error) {
-        res.status(500).send({ status: false, msg: err.message });
+        res.status(500).send({ status: false, msg: error.message });
       }
     }
 

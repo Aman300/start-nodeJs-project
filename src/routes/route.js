@@ -9,8 +9,8 @@ const deleteController = require("../controllers/deleteController")
 
 router.post('/createPost', createController.createPost);
 router.get('/readPost',     readController.readPost);
-router.put('/updatePost',  updateController.updatePost);
-router.put('/deletePost',  deleteController.deletePost);
+router.put('/updatePost/:id',  updateController.updatePost);
+router.put('/deletePost/:id',  deleteController.deletePost);
 
 module.exports =  router;
 
