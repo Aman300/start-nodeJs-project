@@ -9,14 +9,6 @@ const authorSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    age:{
-        type: Number,
-        required: true,
-    },
-    hobby:{
-        type: String,
-        required: true,
-    },
     address:{
         type: String,
         required: true,
@@ -24,11 +16,21 @@ const authorSchema = new mongoose.Schema({
     mobile_Number:{
         type: Number,
         required: true,
-        unique:true
     },
     isDeleted:{
         type:Boolean, 
         default: false
+    },
+    email:{
+        type: String,
+        required: true,
+        unique: true,
+        lowercase: true
+    },
+    password:{
+        type: String,
+        required: true,
+        unique: false,
     }
 
 },{timestamps:true})
