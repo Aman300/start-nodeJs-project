@@ -1,7 +1,5 @@
 
-const authorModel = require('../models/authorModel');
 const jwt = require('jsonwebtoken');
-const blogModel = require('../models/blogModel');
 
 const authentication = async function (req, res, next) {
     try {
@@ -10,11 +8,11 @@ const authentication = async function (req, res, next) {
 
         if (!token) return res.status(400).send({ status: false, msg: "token must be present" });
     
-        let decodedToken = jwt.verify(token, "close_fraind_functionUp");
+        let decodedToken = jwt.verify(token, "Friend_functionUp");
         if (!decodedToken)
             return res.status(400).send({ status: false, msg: "token is invalid" })
 
-        req.authorid = decodedToken.CheckLogin
+        req.studentId = decodedToken.CheckLogin
         
         next()
 
