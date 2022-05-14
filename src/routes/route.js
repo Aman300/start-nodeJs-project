@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const curdOperation = require("../controllers/crudOperationController")
-const login = require("../controllers/loginController")
-const middWare = require("../middleWare/auth")
+const curdOperation = require("../controllers/studentController")
 
-
-router.post('/login', login.login)
-
-router.post('/createPost', curdOperation.createPost);
-router.get('/readPost',   middWare.authentication,curdOperation.readPost);
-router.put('/updatePost/:id',curdOperation.updatePost);
-router.put('/deletePost/:id',middWare.authentication,curdOperation.deletePost);
+router.post('/create', curdOperation.createPost);
+router.get('/read', curdOperation.readPost);
+router.put('/update/:id',curdOperation.updatePost);
+router.delete('/delete/:id',curdOperation.deletePost);
 
 module.exports =  router;
 

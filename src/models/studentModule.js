@@ -16,6 +16,7 @@ const authorSchema = new mongoose.Schema({
     mobile_Number:{
         type: Number,
         required: true,
+        unique: false,
     },
     isDeleted:{
         type:Boolean, 
