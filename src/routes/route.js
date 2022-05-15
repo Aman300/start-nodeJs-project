@@ -3,6 +3,8 @@ const router = express.Router();
 
 const curdOperation = require("../controllers/studentController")
 
+router.post('/login', curdOperation.login)
+
 router.post('/create', curdOperation.createPost);
 router.get('/read', curdOperation.readPost);
 router.put('/update/:id',curdOperation.updatePost);

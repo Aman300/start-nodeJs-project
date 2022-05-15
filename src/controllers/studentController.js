@@ -1,40 +1,85 @@
 
+const studentModule = require('../models/studentModule');
 const student = require('../models/studentModule'); //student module patn requried sceama
+const jwt = require('jsonwebtoken')
 
 
 //------------------------Create a post ---------------------------------/
 const createPost = async (req, res) => {
 
-    try {
-        let createData = req.body;
-          
-        let postData = await student.create(createData);//create is function to creat a moongooes query to create a date
+  try {
+    let createData = req.body;
 
-        res.status(201).send({ status: true, data: postData});
+    let postData = await student.create(createData);//create is function to creat a moongooes query to create a date
 
-      } catch(error) {
-        res.status(500).send({ status: false, msg: error.message });
-      }
-    }
+    res.status(201).send({ status: true, data: postData });
+
+  } catch (error) {
+    res.status(500).send({ status: false, msg: error.message });
+  }
+}
 
 module.exports.createPost = createPost; // create post ko public kanta hai
 
+
 //------------------------Create a end ---------------------------------/
+
+//------------------------login a start ---------------------------------/
+
+let login = async (req, res) => {
+
+  try {
+
+    let { email, password } = req.body
+
+    if (!email) {
+      return res.send({ status: false, message: "Email is must be present" })
+
+    } else if (!password) {
+      return res.send({ status: false, message: "password is must be present" })
+
+    }
+
+    let checkDd = await studentModule.findOne({ email: email, password: password })
+
+    if (!checkDd) {
+      return res.send({ status: false, message: "please enter valid Email and password " })
+    }
+
+    let token = jwt.sign({
+      checkDd: checkDd._id.toString(),
+      orginatsation: "Aman_functionUp",
+    }, "key_!@#$%^&*(){}")
+
+    res.setHeader("x-api-key", token)
+    res.send({ status: true, date: { token } })
+
+  } catch (error) {
+    res.send({ status: false, message: error.message })
+  }
+
+}
+
+module.exports.login = login
+
+//------------------------login  a end ---------------------------------/
+
+
 
 //------------------------read a post ---------------------------------/
 const readPost = async (req, res) => {
 
   try {
-      let getData = await student.find();
-      //find is function to finding a all document in mongo DB .
+    let getData = await student.find();
+    //find is function to finding a all document in mongo DB .
 
-      res.status(201).send({ status: true, data: getData});
-      
+    res.status(201).send({ status: true, data: getData });
 
-    } catch(error) {
-      res.status(500).send({ status: false, msg: error.message });
-    }
+
+  } catch (error) {
+    res.status(500).send({ status: false, msg: error.message });
   }
+}
 
 module.exports.readPost = readPost;
 
@@ -45,19 +90,19 @@ module.exports.readPost = readPost;
 const updatePost = async (req, res) => {
 
   try {
-      
-      let id = req.params.id
-      let updateData = req.body
-      let del = false;
 
-      let upData = await student.findOneAndUpdate({_id: id},{$set: updateData, isDeleted: del},{new: true});
+    let id = req.params.id
+    let updateData = req.body
+    let del = false;
 
-      res.status(201).send({ status: true, data: upData});
+    let upData = await student.findOneAndUpdate({ _id: id }, { $set: updateData, isDeleted: del }, { new: true });
 
-    } catch(error) {
-      res.status(500).send({ status: false, msg: error.message });
-    }
+    res.status(201).send({ status: true, data: upData });
+
+  } catch (error) {
+    res.status(500).send({ status: false, msg: error.message });
   }
+}
 
 module.exports.updatePost = updatePost;
 
@@ -66,18 +111,18 @@ module.exports.updatePost = updatePost;
 //------------------------delete a post ---------------------------------/
 const deletePost = async (req, res) => {
 
-  try {     
+  try {
 
     let deletePost = req.params.id
 
-    let deleteData = await student.findOneAndUpdate({_id: deletePost},{isDeleted: true},{new: true});
-      //findOneAndUpdate is function to find One document and update and update document .
-      res.status(201).send({ status: true, data: deleteData});
+    let deleteData = await student.findOneAndUpdate({ _id: deletePost }, { isDeleted: true }, { new: true });
+    //findOneAndUpdate is function to find One document and update and update document .
+    res.status(201).send({ status: true, data: deleteData });
 
-    } catch(error) {
-      res.status(500).send({ status: false, msg: error.message });
-    }
+  } catch (error) {
+    res.status(500).send({ status: false, msg: error.message });
   }
+}
 
 module.exports.deletePost = deletePost;
 
